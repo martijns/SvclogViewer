@@ -220,7 +220,7 @@
   </Target>
   -->
   <!-- Martijn Stolk - Custom target to sign the assembly after compile -->
-  <Target Name="MySigning" AfterTargets="AfterCompile">
+  <Target Name="MySigning" AfterTargets="AfterCompile" Condition="Exists('martijn_stolk_codesigning_signtool.pfx')">
     <PropertyGroup>
       <SignToolPath Condition=" Exists('$(WindowsSDK80Path)bin\x86\signtool.exe') and '$(SignToolPath)'=='' and '$(PROCESSOR_ARCHITECTURE)'=='x86' ">$(WindowsSDK80Path)bin\x86\signtool.exe</SignToolPath>
       <SignToolPath Condition=" Exists('$(WindowsSDK80Path)bin\x64\signtool.exe') and '$(SignToolPath)'=='' and '$(PROCESSOR_ARCHITECTURE)'=='AMD64' ">$(WindowsSDK80Path)bin\x64\signtool.exe</SignToolPath>
