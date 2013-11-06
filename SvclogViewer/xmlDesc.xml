@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <brackets left="&lt;" right="&gt;" />
+
+  <style name="CommentStyle" color="Green" fontStyle="Italic"/>
+  <style name="TagBracketStyle" color="Blue" fontStyle="Regular" />
+  <style name="TagNameStyle" color="Maroon" fontStyle="Regular" />
+  <style name="AttributeStyle" color="Red" fontStyle="Regular" />
+  <style name="AttributeValueStyle" color="Blue" fontStyle="Regular" />
+  <style name="HtmlEntityStyle" color="Red" fontStyle="Regular" />
+
+  <rule style="CommentStyle" options="Singleline"><![CDATA[(<!--.*?-->)|(<!--.*)]]></rule>
+  <rule style="CommentStyle" options="Singleline,RightToLeft"><![CDATA[(<!--.*?-->)|(.*-->)]]></rule>
+  <rule style="TagBracketStyle"><![CDATA[<|/>|</|>]]></rule>
+  <rule style="TagNameStyle"><![CDATA[<(?<range>[!\w-:]+)]]></rule>
+  <rule style="TagNameStyle"><![CDATA[</(?<range>[\w-:]+)>]]></rule>
+  <rule style="AttributeStyle"><![CDATA[(?<range>[\w\d\-:]{1,20}?)='[^']*'|(?<range>[\w\d\-:]{1,20})="[^"]*"|(?<range>[\w\d\-:]{1,20})=[\w\d\-:]{1,20}]]></rule>
+  <rule style="AttributeValueStyle"><![CDATA[[\w\d\-:]{1,20}?=(?<range>'[^']*')|[\w\d\-:]{1,20}=(?<range>"[^"]*")|[\w\d\-:]{1,20}=(?<range>[\w\d\-:]{1,20})]]></rule>
+  <rule style="HtmlEntityStyle" options="IgnoreCase"><![CDATA[\&(amp|gt|lt|nbsp|quot|apos|copy|reg|#[0-9]{1,8}|#x[0-9a-f]{1,8});]]></rule>
+
+</doc>

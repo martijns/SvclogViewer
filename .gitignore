@@ -1,0 +1,16 @@
+# Exclude some local teststuff
+SvclogWebViewer
+FastColoredTextBox
+*.svclog
+*.7z
+
+# Exclude user specific files
+**/*.suo
+**/*.user
+
+# Exclude private certificates
+**/*.pfx
+
+# Exclude obj and bin directories
+**/bin
+**/obj
