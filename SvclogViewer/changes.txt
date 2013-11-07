@@ -1,3 +1,6 @@
+2013-11-07
+- FIX: File association in Explorer wasn't always fixed
+
 2013-11-06
 - NEW: Added a checkbox to enable syntax coloring, which replaces the textbox with the FastColoredTextBox by Pavel Torgashov (https://github.com/PavelTorgashov/FastColoredTextBox)
 - DEL: Button to format once has been removed, user feedback indicated it was never used.
