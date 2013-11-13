@@ -1,3 +1,7 @@
+2013-11-10:
+- FIX: Update mechanism. Automatically downloads the update now and applies it on the next start. Still provides the user with a choice to restart now or later.
+- NEW: Ability to view changelog within the application.
+
 2013-11-07
 - FIX: File association in Explorer wasn't always fixed
 

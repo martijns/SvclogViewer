@@ -175,9 +175,14 @@ namespace SvclogViewer
             LoadFile(dialog.FileName);
         }
 
+        private void HandleChangelogClicked(object sender, EventArgs e)
+        {
+            Version.DisplayChanges();
+        }
+
         private void HandleAbout(object sender, EventArgs e)
         {
-            MessageBox.Show("SvclogViewer v" + Version.GetVersion() + " by Martijn Stolk");
+            Version.DisplayAbout();
         }
 
         private void HandleGridSelectionChanged(object sender, EventArgs e)

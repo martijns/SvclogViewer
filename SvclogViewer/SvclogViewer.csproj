@@ -28,7 +28,7 @@
     <SupportUrl>http://www.netripper.nl</SupportUrl>
     <ProductName>SvclogViewer</ProductName>
     <PublisherName>Tikkie</PublisherName>
-    <ApplicationRevision>49</ApplicationRevision>
+    <ApplicationRevision>57</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

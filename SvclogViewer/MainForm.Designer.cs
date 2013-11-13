@@ -58,11 +58,13 @@ namespace SvclogViewer
             this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitMessageButtons = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkSyntaxColoring = new System.Windows.Forms.CheckBox();
             this.checkAutoFormat = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new SvclogViewer.SwitchableTextBox();
-            this.checkSyntaxColoring = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitLeftRight)).BeginInit();
@@ -194,10 +196,12 @@ namespace SvclogViewer
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changelogToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.helpToolStripMenuItem.Text = "About";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.HandleAbout);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // splitLeftRight
             // 
@@ -380,6 +384,16 @@ namespace SvclogViewer
             this.panel1.Size = new System.Drawing.Size(761, 35);
             this.panel1.TabIndex = 1;
             // 
+            // checkSyntaxColoring
+            // 
+            this.checkSyntaxColoring.AutoSize = true;
+            this.checkSyntaxColoring.Location = new System.Drawing.Point(487, 6);
+            this.checkSyntaxColoring.Name = "checkSyntaxColoring";
+            this.checkSyntaxColoring.Size = new System.Drawing.Size(118, 17);
+            this.checkSyntaxColoring.TabIndex = 4;
+            this.checkSyntaxColoring.Text = "Use syntax coloring";
+            this.checkSyntaxColoring.UseVisualStyleBackColor = true;
+            // 
             // checkAutoFormat
             // 
             this.checkAutoFormat.AutoSize = true;
@@ -412,6 +426,20 @@ namespace SvclogViewer
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.HandleCopyToClipboard);
             // 
+            // changelogToolStripMenuItem
+            // 
+            this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
+            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changelogToolStripMenuItem.Text = "Changelog";
+            this.changelogToolStripMenuItem.Click += new System.EventHandler(this.HandleChangelogClicked);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HandleAbout);
+            // 
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -421,16 +449,6 @@ namespace SvclogViewer
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(761, 458);
             this.textBox1.TabIndex = 0;
-            // 
-            // checkSyntaxColoring
-            // 
-            this.checkSyntaxColoring.AutoSize = true;
-            this.checkSyntaxColoring.Location = new System.Drawing.Point(487, 6);
-            this.checkSyntaxColoring.Name = "checkSyntaxColoring";
-            this.checkSyntaxColoring.Size = new System.Drawing.Size(118, 17);
-            this.checkSyntaxColoring.TabIndex = 4;
-            this.checkSyntaxColoring.Text = "Use syntax coloring";
-            this.checkSyntaxColoring.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -507,6 +525,8 @@ namespace SvclogViewer
         private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setAppAsDefaultForsvclogFilesToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkSyntaxColoring;
+        private System.Windows.Forms.ToolStripMenuItem changelogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 
