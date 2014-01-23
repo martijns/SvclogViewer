@@ -157,9 +157,17 @@ namespace SvclogViewer
             var row = new DataGridViewRow();
             row.Tag = evt;
             row.CreateCells(dataGridView1, evt.TimeCreated.ToString("yyyy'-'MM'-'dd HH':'mm':'ss.fffffff") + "\r\n" + evt.Method, ((evt.PositionEnd - evt.PositionStart) / 1000.0).ToString("0.0", CultureInfo.GetCultureInfo("nl-NL")));
+            row.DefaultCellStyle.BackColor = GetColor(evt.ActivityID);
             dataGridView1.Rows.Add(row);
             if (evt.PositionStart == lastSelectedEventOffset)
                 row.Selected = true;
+        }
+
+        private Color GetColor(Guid guid)
+        {
+            Color c = Color.FromArgb(guid.GetHashCode());
+            c = Color.FromArgb(255, c.R % 128 + 127, c.G % 128 + 127, c.B % 128 + 127);
+            return c;
         }
 
         private void HandleFileOpen(object sender, EventArgs e)

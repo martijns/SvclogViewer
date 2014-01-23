@@ -39,6 +39,7 @@ namespace SvclogViewer
                 evt.PositionStart = FindStringInStream(reader, RecordStart, curPos);
                 if (evt.PositionStart == -1)
                     break; // No new tracerecord found
+                ReadActivityID(reader, evt, evt.PositionStart, 300);
                 ReadTimeAndSource(reader, evt, evt.PositionStart, 120);
                 evt.PositionEnd = FindStringInStream(reader, RecordEnd, evt.PositionStart);
                 if (evt.PositionEnd == -1)
@@ -112,6 +113,23 @@ namespace SvclogViewer
                     evt.TimeCreated = parsedDt;
                 evt.Source = m.Groups[2].Value;
                 evt.Source = evt.Source.Replace("SendRequest", "").Replace("ReceiveReply", "").Replace("Send", "").Replace("Receive", "");
+            }
+        }
+
+        private void ReadActivityID(StreamReader reader, TraceEvent evt, long fromPosition, long sizeToScan)
+        {
+            reader.BaseStream.Seek(fromPosition - sizeToScan, SeekOrigin.Begin);
+            reader.DiscardBufferedData();
+            char[] buffer = new char[sizeToScan];
+            int charsRead = reader.ReadBlock(buffer, 0, buffer.Length);
+            string str = new string(buffer, 0, charsRead);
+            Match m = Regex.Match(str, ".*?ActivityID=\"{(.*?)}.*", RegexOptions.IgnoreCase);
+            if (m != null && m.Success)
+            {
+                string guid = m.Groups[1].Value;
+                Guid parsedGuid;
+                if (Guid.TryParse(guid, out parsedGuid))
+                    evt.ActivityID = parsedGuid;
             }
         }
 

@@ -12,5 +12,6 @@ namespace SvclogViewer.Entities
         public DateTime TimeCreated { get; set; }
         public string Method { get; set; }
         public string Source { get; set; }
+        public Guid ActivityID { get; set; }
     }
 }
