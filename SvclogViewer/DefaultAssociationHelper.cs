@@ -128,10 +128,15 @@ namespace SvclogViewer
                 //key2.SetValue("", "Tikkie.SvcLogViewer");
                 //var key3 = Registry.ClassesRoot.CreateSubKey("Tikkie.SvcLogViewer\\shell\\Open\\command");
                 //key3.SetValue("", GetFileAssociationCommandString());
+                //if (Registry.LocalMachine.OpenSubKey("SOFTWARE\\Classes\\.svclog") != null)
                 Registry.LocalMachine.DeleteSubKeyTree("SOFTWARE\\Classes\\.svclog", false);
                 key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Classes\\.svclog");
                 key.SetValue("", "Tikkie.SvcLogViewer");
-                Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.svclog", false);
+                using (RegistryKey rkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.svclog", RegistryKeyPermissionCheck.ReadWriteSubTree, System.Security.AccessControl.RegistryRights.Delete))
+                {
+                    if (rkey != null)
+                        rkey.DeleteSubKey("UserChoice", false);
+                }
                 return true;
             }
             catch (Exception ex)
