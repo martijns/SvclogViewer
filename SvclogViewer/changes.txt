@@ -1,3 +1,6 @@
+2014-01-24:
+- NEW: Randomly color related messages based on their ActivityID
+
 2013-11-10:
 - FIX: Update mechanism. Automatically downloads the update now and applies it on the next start. Still provides the user with a choice to restart now or later.
 - NEW: Ability to view changelog within the application.
