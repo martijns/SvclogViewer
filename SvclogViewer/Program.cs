@@ -64,7 +64,18 @@ namespace SvclogViewer
 
         static void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show("An unhandled 'oopsie' occurred. Make a screenshot of this box and show it to the developer.\r\n\r\n" + e.ExceptionObject, "Whoops...");
+            Exception ex = e.ExceptionObject as Exception;
+            if (ex == null)
+                return;
+
+            try
+            {
+                new ReportBugForm(ex).ShowDialog();
+            }
+            catch (Exception ex2)
+            {
+                MessageBox.Show("Proper error handling failed (" + ex2.Message + "). Please show the following message to the developer:\r\n\r\n" + ex, "Whoops!");
+            }
         }
     }
 }

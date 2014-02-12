@@ -1,3 +1,6 @@
+2014-02-13:
+- NEW: New crash dialog with the ability to upload a report to the developer.
+
 2014-01-24:
 - NEW: Randomly color related messages based on their ActivityID
 
