@@ -46,6 +46,8 @@ namespace SvclogViewer
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAppAsDefaultForsvclogFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitLeftRight = new System.Windows.Forms.SplitContainer();
             this.splitFilterResult = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
@@ -62,8 +64,6 @@ namespace SvclogViewer
             this.checkAutoFormat = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new SvclogViewer.SwitchableTextBox();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -203,6 +203,20 @@ namespace SvclogViewer
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // changelogToolStripMenuItem
+            // 
+            this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
+            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.changelogToolStripMenuItem.Text = "Changelog";
+            this.changelogToolStripMenuItem.Click += new System.EventHandler(this.HandleChangelogClicked);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HandleAbout);
+            // 
             // splitLeftRight
             // 
             this.splitLeftRight.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -325,6 +339,9 @@ namespace SvclogViewer
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(310, 423);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.VirtualMode = true;
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.HandleCellFormatting);
+            this.dataGridView1.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.HandleCellValueNeeded);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.HandleGridSelectionChanged);
             // 
             // Datetime
@@ -425,20 +442,6 @@ namespace SvclogViewer
             this.button1.Text = "Copy to clipboard";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.HandleCopyToClipboard);
-            // 
-            // changelogToolStripMenuItem
-            // 
-            this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
-            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.changelogToolStripMenuItem.Text = "Changelog";
-            this.changelogToolStripMenuItem.Click += new System.EventHandler(this.HandleChangelogClicked);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HandleAbout);
             // 
             // textBox1
             // 

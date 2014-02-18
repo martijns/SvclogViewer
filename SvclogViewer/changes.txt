@@ -1,3 +1,6 @@
+2014-02-19:
+- NEW: Virtual mode is used for the gridview, increasing performance a lot
+
 2014-02-13:
 - NEW: New crash dialog with the ability to upload a report to the developer.
 

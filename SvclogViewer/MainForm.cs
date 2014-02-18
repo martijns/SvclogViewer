@@ -23,6 +23,7 @@ namespace SvclogViewer
         private StreamReader reader = null;
         private List<TraceEvent> events = new List<TraceEvent>();
         private List<TraceEvent> filteredEvents = null;
+        private TraceEvent[] _currentVisibleTraceEvents; // for virtual mode
         private long lastSelectedEventOffset = -1;
         private string loadfileonstartup;
 
@@ -47,6 +48,13 @@ namespace SvclogViewer
             checkSyntaxColoring.Checked = Configuration.Instance.UseSyntaxColoring;
             cmbSouce.Items.Add("Any");
             cmbSouce.SelectedIndex = 0;
+
+            typeof(DataGridView).InvokeMember(
+               "DoubleBuffered",
+               BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
+               null,
+               dataGridView1,
+               new object[] { true });
         }
 
         void HandleSyntaxColoringCheckedChanged(object sender, EventArgs e)
@@ -118,6 +126,7 @@ namespace SvclogViewer
             }
 
             // Empty datagrid
+            _currentVisibleTraceEvents = null;
             dataGridView1.Rows.Clear();
 
             // Open and index new file
@@ -146,21 +155,6 @@ namespace SvclogViewer
             lblStatus.Text = "file loaded";
             lblFilename.Text = filename;
             Text = "SvclogViewer - " + Path.GetFileName(filename);
-        }
-
-        private void AddTraceEvent(TraceEvent evt)
-        {
-            string selectedSource = (string)cmbSouce.Items[cmbSouce.SelectedIndex];
-            if (selectedSource != "Any" && selectedSource != evt.Source)
-                return;
-
-            var row = new DataGridViewRow();
-            row.Tag = evt;
-            row.CreateCells(dataGridView1, evt.TimeCreated.ToString("yyyy'-'MM'-'dd HH':'mm':'ss.fffffff") + "\r\n" + evt.Method, ((evt.PositionEnd - evt.PositionStart) / 1000.0).ToString("0.0", CultureInfo.GetCultureInfo("nl-NL")));
-            row.DefaultCellStyle.BackColor = GetColor(evt.ActivityID);
-            dataGridView1.Rows.Add(row);
-            if (evt.PositionStart == lastSelectedEventOffset)
-                row.Selected = true;
         }
 
         private Color GetColor(Guid guid)
@@ -197,13 +191,13 @@ namespace SvclogViewer
         {
             if (reader == null)
                 return;
-            if (dataGridView1.SelectedRows.Count == 0)
+            if (dataGridView1.CurrentCell == null)
                 return;
-            TraceEvent evt = dataGridView1.SelectedRows[0].Tag as TraceEvent;
+            TraceEvent evt = GetTraceEvent(dataGridView1.CurrentCell.RowIndex);
             if (evt == null)
                 return;
-
-            //lastSelectedEventOffset = evt.PositionStart;
+            if (reader.BaseStream == null)
+                return;
 
             long dataLength = evt.PositionEnd - evt.PositionStart;
             reader.BaseStream.Position = evt.PositionStart;
@@ -301,10 +295,23 @@ namespace SvclogViewer
         private void RefreshEventList()
         {
             dataGridView1.Rows.Clear();
+            List<TraceEvent> visibleEvents = new List<TraceEvent>();
+            string selectedSource = (string)cmbSouce.Items[cmbSouce.SelectedIndex];
             foreach (var evt in filteredEvents ?? events)
             {
-                AddTraceEvent(evt);
+                if (selectedSource != "Any" && selectedSource != evt.Source)
+                    continue;
+                visibleEvents.Add(evt);
             }
+            _currentVisibleTraceEvents = visibleEvents.ToArray();
+            dataGridView1.RowCount = _currentVisibleTraceEvents.Length;
+            int selectedrow = Array.FindIndex(_currentVisibleTraceEvents, t => t.PositionStart == lastSelectedEventOffset);
+            if (selectedrow >= 0)
+            {
+                dataGridView1.CurrentCell = null;
+                dataGridView1.CurrentCell = dataGridView1.Rows[selectedrow].Cells[0];
+            }
+            dataGridView1.Invalidate();
         }
 
         private void HandleDragEnter(object sender, DragEventArgs e)
@@ -351,7 +358,11 @@ namespace SvclogViewer
         private void DisableInput()
         {
             if (dataGridView1.SelectedRows.Count > 0)
-                lastSelectedEventOffset = ((TraceEvent)dataGridView1.SelectedRows[0].Tag).PositionStart;
+            {
+                TraceEvent evt = GetTraceEvent(dataGridView1.CurrentCell.RowIndex);
+                if (evt != null)
+                    lastSelectedEventOffset = evt.PositionStart;
+            }
             splitLeftRight.Enabled = false;
             dataGridView1.ScrollBars = ScrollBars.None;
         }
@@ -413,6 +424,52 @@ namespace SvclogViewer
             else
             {
                 CheckDefault();
+            }
+        }
+
+        private TraceEvent GetTraceEvent(int rowindex)
+        {
+            if (_currentVisibleTraceEvents == null)
+                return null;
+
+            if (rowindex < 0 || rowindex >= _currentVisibleTraceEvents.Length)
+                return null;
+
+            return _currentVisibleTraceEvents[rowindex];
+
+        }
+
+        private void HandleCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+        {
+            TraceEvent evt = GetTraceEvent(e.RowIndex);
+            if (evt == null)
+                return;
+
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    e.Value = evt.TimeCreated.ToString("yyyy'-'MM'-'dd HH':'mm':'ss.fffffff") + "\r\n" + evt.Method;
+                    break;
+                case 1:
+                    e.Value = ((evt.PositionEnd - evt.PositionStart) / 1000.0).ToString("0.0", CultureInfo.GetCultureInfo("nl-NL"));
+                    break;
+                default:
+                    e.Value = string.Empty;
+                    break;
+            }
+        }
+
+        private void HandleCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            TraceEvent evt = GetTraceEvent(e.RowIndex);
+            if (evt == null)
+                return;
+
+            Color color = GetColor(evt.ActivityID);
+            if (e.CellStyle.BackColor != color)
+            {
+                e.CellStyle.BackColor = color;
+                e.FormattingApplied = true;
             }
         }
     }
