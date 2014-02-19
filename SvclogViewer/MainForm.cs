@@ -304,13 +304,32 @@ namespace SvclogViewer
                 visibleEvents.Add(evt);
             }
             _currentVisibleTraceEvents = visibleEvents.ToArray();
+
+            // Columns have a fixed width for performance
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+
+            // Rows have a fixed height for performance, calculate once
+            dataGridView1.VirtualMode = false;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.Rows.Add("dummy\r\ndummy", "");
+            int calculatedheight = dataGridView1.Rows[0].Height;
+            dataGridView1.Rows.Clear();
+            dataGridView1.VirtualMode = true;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dataGridView1.RowTemplate.Height = calculatedheight;
+
+            // Update the rowcount, performance hit! Make sure the rows are cleared beforehand
             dataGridView1.RowCount = _currentVisibleTraceEvents.Length;
+
+            // Re-select the correct row, if found
             int selectedrow = Array.FindIndex(_currentVisibleTraceEvents, t => t.PositionStart == lastSelectedEventOffset);
             if (selectedrow >= 0)
             {
                 dataGridView1.CurrentCell = null;
                 dataGridView1.CurrentCell = dataGridView1.Rows[selectedrow].Cells[0];
             }
+
+            // Refresh the currently visible rows, to update content and background colors
             dataGridView1.Invalidate();
         }
 
