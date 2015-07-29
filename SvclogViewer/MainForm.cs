@@ -210,7 +210,11 @@ namespace SvclogViewer
                 FormatXML(str);
             else
                 textBox1.Text = str;
-        }
+
+            bool containsBinary = GetBinary(str) != null;
+            btnDecodeBinary.Visible = containsBinary;
+            btnDecodeBinary.Enabled = containsBinary;
+       }
 
         private void FormatXML(string txtToFormat)
         {
@@ -490,6 +494,45 @@ namespace SvclogViewer
                 e.CellStyle.BackColor = color;
                 e.FormattingApplied = true;
             }
+        }
+
+        private string GetBinary(string str)
+        {
+            if (str.Contains("<Binary") && Regex.IsMatch(str, ".*<Binary.*?>(.*?)</Binary>.*"))
+            {
+                string binary = Regex.Match(str, ".*<Binary.*?>(.*?)</Binary>.*").Groups[1].Value;
+                if (!string.IsNullOrWhiteSpace(binary) && binary.Length % 4 == 0)
+                {
+                    try
+                    {
+                        byte[] data = Convert.FromBase64String(binary);
+                        if (data != null)
+                            return binary;
+                    }
+                    catch (Exception)
+                    {
+                        // error in base64
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void HandleDecodeBinaryClicked(object sender, EventArgs e)
+        {
+            string binary = GetBinary(textBox1.Text);
+            if (binary == null)
+                return;
+
+            byte[] data = Convert.FromBase64String(binary);
+            string decodedString = Encoding.UTF8.GetString(data);
+
+            if (checkAutoFormat.Checked)
+                FormatXML(decodedString);
+            else
+                textBox1.Text = decodedString;
+
+            btnDecodeBinary.Enabled = false;
         }
     }
 }

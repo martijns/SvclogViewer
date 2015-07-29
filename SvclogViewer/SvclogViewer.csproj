@@ -29,7 +29,7 @@
     <SupportUrl>http://www.netripper.nl</SupportUrl>
     <ProductName>SvclogViewer</ProductName>
     <PublisherName>Tikkie</PublisherName>
-    <ApplicationRevision>62</ApplicationRevision>
+    <ApplicationRevision>64</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -64,7 +64,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>C32A5D870A812DA9D3922F4E977E13526AAD73F1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>19A2813513F13650E4A4D97845CE370E6A199785</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>appicon.ico</ApplicationIcon>
@@ -91,7 +91,8 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>martijn_stolk_codesigning_signtool.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FastColoredTextBox, Version=2.10.16.0, Culture=neutral, processorArchitecture=MSIL">

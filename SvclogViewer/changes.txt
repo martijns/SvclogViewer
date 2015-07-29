@@ -1,3 +1,6 @@
+2015-02-11:
+- NEW: Support for <Binary xmlns="">xxxBASE64DATAxxx</Binary> type of messages
+
 2014-02-19:
 - NEW: Virtual mode is used for the gridview, increasing performance a lot
 
