@@ -13,5 +13,11 @@ namespace SvclogViewer.Entities
         public string Method { get; set; }
         public string Source { get; set; }
         public Guid ActivityID { get; set; }
+        public string To { get; set; }
+
+        public bool ContainsPosition(long position)
+        {
+            return position >= PositionStart && position <= PositionEnd;
+        }
     }
 }

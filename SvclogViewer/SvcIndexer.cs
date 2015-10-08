@@ -45,6 +45,7 @@ namespace SvclogViewer
                 if (evt.PositionEnd == -1)
                     break; // A tracerecord was found, but the ending was not found
                 evt.PositionEnd = evt.PositionEnd + RecordEnd.Length;
+                evt.To = FindTo(reader, evt.PositionStart, evt.PositionEnd);
                 evt.Method = FindMethod(reader, evt.PositionStart, evt.PositionEnd);
 
                 // Start searching from the endposition again
@@ -57,6 +58,23 @@ namespace SvclogViewer
             return events;
         }
 
+        private string FindTo(StreamReader reader, long startPos, long endPos)
+        {
+            long pos = FindStringInStream(reader, "<To>", startPos, endPos);
+            if (pos == -1)
+                return string.Empty;
+            reader.BaseStream.Seek(pos, SeekOrigin.Begin);
+            reader.DiscardBufferedData();
+            char[] buffer = new char[4096];
+            int charsRead = reader.ReadBlock(buffer, 0, buffer.Length);
+            string str = new string(buffer, 0, charsRead);
+            Match m = Regex.Match(str, @".*?<To>(.*?)(</).*", RegexOptions.IgnoreCase);
+            if (m != null && m.Success)
+            {
+                return m.Groups[1].Value;
+            }
+            return string.Empty;
+        }
         private string FindMethod(StreamReader reader, long startPos, long endPos)
         {
             long pos = FindStringInStream(reader, "Body", startPos, endPos);
@@ -67,7 +85,7 @@ namespace SvclogViewer
             char[] buffer = new char[200];
             int charsRead = reader.ReadBlock(buffer, 0, buffer.Length);
             string str = new string(buffer, 0, charsRead);
-            Match m = Regex.Match(str, @".*?<(.*?) .*", RegexOptions.IgnoreCase);
+            Match m = Regex.Match(str, @".*?<(.*?)( |>).*", RegexOptions.IgnoreCase);
             if (m != null && m.Success)
             {
                 string method = m.Groups[1].Value;
