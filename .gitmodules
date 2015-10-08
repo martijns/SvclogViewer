@@ -1,0 +1,3 @@
+[submodule "MsCommon.ClickOnce"]
+	path = MsCommon.ClickOnce
+	url = git@github.com:martijns/MsCommon.ClickOnce.git
