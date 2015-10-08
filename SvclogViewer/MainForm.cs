@@ -1,9 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using MsCommon.ClickOnce;
 using SvclogViewer.Config;
 using SvclogViewer.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
@@ -31,8 +30,8 @@ namespace SvclogViewer
         {
             loadfileonstartup = file;
             InitializeComponent();
-            Text = "SvclogViewer v" + Version.GetVersion();
-            Version.CheckForUpdateAsync();
+            Text = "SvclogViewer v" + AppVersion.GetVersion();
+            AppVersion.CheckForUpdateAsync();
             Shown += HandleMainFormShown;
             FormClosing += HandleMainFormClosing;
             DisableInput();
@@ -179,12 +178,12 @@ namespace SvclogViewer
 
         private void HandleChangelogClicked(object sender, EventArgs e)
         {
-            Version.DisplayChanges();
+            AppVersion.DisplayChanges();
         }
 
         private void HandleAbout(object sender, EventArgs e)
         {
-            Version.DisplayAbout();
+            AppVersion.DisplayAbout();
         }
 
         private void HandleGridSelectionChanged(object sender, EventArgs e)

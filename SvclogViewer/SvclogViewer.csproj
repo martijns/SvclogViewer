@@ -64,7 +64,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>19A2813513F13650E4A4D97845CE370E6A199785</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B4C5100E2ED9347F88CDAFCA04F07EEAD3FE528C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>appicon.ico</ApplicationIcon>
@@ -79,7 +79,8 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>martijn_stolk_codesigning_signtool.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
@@ -122,12 +123,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\TraceEvent.cs" />
-    <Compile Include="ReportBugForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReportBugForm.Designer.cs">
-      <DependentUpon>ReportBugForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SvcIndexer.cs" />
     <Compile Include="SwitchableTextBox.cs">
       <SubType>UserControl</SubType>
@@ -135,7 +130,6 @@
     <Compile Include="SwitchableTextBox.Designer.cs">
       <DependentUpon>SwitchableTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Version.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,7 +144,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="martijn_stolk_codesigning_signtool.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -222,6 +215,12 @@
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MsCommon.ClickOnce\MsCommon.ClickOnce.csproj">
+      <Project>{28aff2bb-79a2-46a2-9ef0-202b188aa028}</Project>
+      <Name>MsCommon.ClickOnce</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
@@ -235,7 +234,7 @@
   </Target>
   -->
   <!-- Martijn Stolk - Custom target to sign the assembly after compile -->
-  <Target Name="MySigning" AfterTargets="AfterCompile" Condition="Exists('martijn_stolk_codesigning_signtool.pfx')">
+  <Target Name="MySigning" AfterTargets="AfterCompile" Condition="Exists('martijn_stolk_codesigning.pfx')">
     <PropertyGroup>
       <SignToolPath Condition=" Exists('$(WindowsSDK80Path)bin\x86\signtool.exe') and '$(SignToolPath)'=='' and '$(PROCESSOR_ARCHITECTURE)'=='x86' ">$(WindowsSDK80Path)bin\x86\signtool.exe</SignToolPath>
       <SignToolPath Condition=" Exists('$(WindowsSDK80Path)bin\x64\signtool.exe') and '$(SignToolPath)'=='' and '$(PROCESSOR_ARCHITECTURE)'=='AMD64' ">$(WindowsSDK80Path)bin\x64\signtool.exe</SignToolPath>
