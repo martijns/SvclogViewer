@@ -15,7 +15,7 @@
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>ftp://martijn.tikkie.net/apps/SvclogViewer/</PublishUrl>
+    <PublishUrl>ftp://martijn.tikkie.net%40ftp.pcextreme.nl/apps/SvclogViewer/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -29,7 +29,9 @@
     <SupportUrl>http://www.netripper.nl</SupportUrl>
     <ProductName>SvclogViewer</ProductName>
     <PublisherName>Tikkie</PublisherName>
-    <ApplicationRevision>64</ApplicationRevision>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>66</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
