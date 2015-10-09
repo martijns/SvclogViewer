@@ -45,12 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dropper.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dropper.Designer.cs">
-      <DependentUpon>Dropper.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,11 +56,6 @@
       <Project>{02c83a78-48df-4f4c-b54b-e062e2db8294}</Project>
       <Name>SvclogViewer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Dropper.resx">
-      <DependentUpon>Dropper.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

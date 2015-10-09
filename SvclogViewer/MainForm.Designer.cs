@@ -60,12 +60,13 @@ namespace SvclogViewer
             this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitMessageButtons = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnDecodeBinary = new System.Windows.Forms.Button();
             this.checkSyntaxColoring = new System.Windows.Forms.CheckBox();
             this.checkAutoFormat = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new SvclogViewer.SwitchableTextBox();
-            this.btnDecodeBinary = new System.Windows.Forms.Button();
+            this.startsvclogAnalyzerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitLeftRight)).BeginInit();
@@ -183,7 +184,8 @@ namespace SvclogViewer
             // extrasToolStripMenuItem
             // 
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.setAppAsDefaultForsvclogFilesToolStripMenuItem});
+            this.setAppAsDefaultForsvclogFilesToolStripMenuItem,
+            this.startsvclogAnalyzerToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
             this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.extrasToolStripMenuItem.Text = "Extras";
@@ -403,6 +405,18 @@ namespace SvclogViewer
             this.panel1.Size = new System.Drawing.Size(857, 35);
             this.panel1.TabIndex = 1;
             // 
+            // btnDecodeBinary
+            // 
+            this.btnDecodeBinary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDecodeBinary.Location = new System.Drawing.Point(610, 3);
+            this.btnDecodeBinary.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDecodeBinary.Name = "btnDecodeBinary";
+            this.btnDecodeBinary.Size = new System.Drawing.Size(125, 24);
+            this.btnDecodeBinary.TabIndex = 5;
+            this.btnDecodeBinary.Text = "Decode Binary";
+            this.btnDecodeBinary.UseVisualStyleBackColor = true;
+            this.btnDecodeBinary.Click += new System.EventHandler(this.HandleDecodeBinaryClicked);
+            // 
             // checkSyntaxColoring
             // 
             this.checkSyntaxColoring.AutoSize = true;
@@ -455,17 +469,12 @@ namespace SvclogViewer
             this.textBox1.Size = new System.Drawing.Size(857, 498);
             this.textBox1.TabIndex = 0;
             // 
-            // btnDecodeBinary
+            // startsvclogAnalyzerToolStripMenuItem
             // 
-            this.btnDecodeBinary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDecodeBinary.Location = new System.Drawing.Point(610, 3);
-            this.btnDecodeBinary.Margin = new System.Windows.Forms.Padding(2);
-            this.btnDecodeBinary.Name = "btnDecodeBinary";
-            this.btnDecodeBinary.Size = new System.Drawing.Size(125, 24);
-            this.btnDecodeBinary.TabIndex = 5;
-            this.btnDecodeBinary.Text = "Decode Binary";
-            this.btnDecodeBinary.UseVisualStyleBackColor = true;
-            this.btnDecodeBinary.Click += new System.EventHandler(this.HandleDecodeBinaryClicked);
+            this.startsvclogAnalyzerToolStripMenuItem.Name = "startsvclogAnalyzerToolStripMenuItem";
+            this.startsvclogAnalyzerToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.startsvclogAnalyzerToolStripMenuItem.Text = "Start .svclog analyzer...";
+            this.startsvclogAnalyzerToolStripMenuItem.Click += new System.EventHandler(this.HandleStartAnalyzerClicked);
             // 
             // MainForm
             // 
@@ -545,6 +554,7 @@ namespace SvclogViewer
         private System.Windows.Forms.ToolStripMenuItem changelogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Button btnDecodeBinary;
+        private System.Windows.Forms.ToolStripMenuItem startsvclogAnalyzerToolStripMenuItem;
     }
 }
 

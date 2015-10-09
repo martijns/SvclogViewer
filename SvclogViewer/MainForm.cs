@@ -533,5 +533,10 @@ namespace SvclogViewer
 
             btnDecodeBinary.Enabled = false;
         }
+
+        private void HandleStartAnalyzerClicked(object sender, EventArgs e)
+        {
+            new SvcAnalyzerDropper().ShowDialog(this);
+        }
     }
 }

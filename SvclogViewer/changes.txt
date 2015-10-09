@@ -1,3 +1,7 @@
+2015-10-08:
+- CHG: Moved clickonce-specific code to a reusable library.
+- NEW: Svclog Analyzer via Extra menu. Parses .svclog and creates a .csv with a list of calls and how long they took.
+
 2015-02-11:
 - NEW: Support for <Binary xmlns="">xxxBASE64DATAxxx</Binary> type of messages
 

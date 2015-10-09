@@ -10,11 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RequestAnalyzer
+namespace SvclogViewer
 {
-    public partial class Dropper : Form
+    public partial class SvcAnalyzerDropper : Form
     {
-        public Dropper()
+        public SvcAnalyzerDropper()
         {
             InitializeComponent();
         }
@@ -46,9 +46,37 @@ namespace RequestAnalyzer
                     return;
                 new Thread(() =>
                 {
-                    Program.Analyze(filenames);
+                    var analyzer = new SvcAnalyzer();
+                    analyzer.Progress += HandleAnalyzerProgress;
+                    analyzer.Analyze(null, filenames);
+                    UpdateLabel("Done, waiting...");
                 }).Start();
             }
+        }
+
+        private int _lastPercentage;
+
+        private void HandleAnalyzerProgress(object sender, AnalyzeEventArgs e)
+        {
+            int percentage = (int)((double)e.CurrentPosition / e.FileSize * 100);
+            if (percentage != _lastPercentage)
+            {
+                _lastPercentage = percentage;
+                string msg = string.Format("File: {0}, Mode: {1}, Progress: {2}% ({3} / {4})", Path.GetFileName(e.CurrentFileName), e.CurrentOperation, percentage, e.CurrentPosition, e.FileSize);
+                UpdateLabel(msg);
+            }
+        }
+
+        private void UpdateLabel(string msg)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((Action<string>)UpdateLabel, msg);
+                return;
+            }
+
+            lbStatus.Text = msg;
+            Application.DoEvents();
         }
     }
 }
