@@ -22,5 +22,11 @@ namespace SvclogViewer.Config
 
         [XmlElement]
         public bool UseSyntaxColoring { get; set; }
+
+        [XmlElement]
+        public bool UseAutoUrlDecode { get; set; }
+
+        [XmlElement]
+        public bool UseAutoHtmlDecode { get; set; }
     }
 }

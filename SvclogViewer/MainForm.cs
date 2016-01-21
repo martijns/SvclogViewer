@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -45,8 +46,13 @@ namespace SvclogViewer
             checkAutoFormat.Checked = Configuration.Instance.AutoXmlFormatEnabled;
             checkSyntaxColoring.CheckedChanged += HandleSyntaxColoringCheckedChanged;
             checkSyntaxColoring.Checked = Configuration.Instance.UseSyntaxColoring;
+            cbAutoUrlDecode.CheckedChanged += HandleAutoUrlDecodeChanged;
+            cbAutoUrlDecode.Checked = Configuration.Instance.UseAutoUrlDecode;
+            cbAutoHtmlDecode.CheckedChanged += HandleAutoHtmlDecodeChanged;
+            cbAutoHtmlDecode.Checked = Configuration.Instance.UseAutoHtmlDecode;
             cmbSouce.Items.Add("Any");
             cmbSouce.SelectedIndex = 0;
+            HandleSplitResize(this, new SplitterEventArgs(0, 0, 0, 0));
 
             typeof(DataGridView).InvokeMember(
                "DoubleBuffered",
@@ -54,6 +60,20 @@ namespace SvclogViewer
                null,
                dataGridView1,
                new object[] { true });
+        }
+
+        private void HandleAutoHtmlDecodeChanged(object sender, EventArgs e)
+        {
+            Configuration.Instance.UseAutoHtmlDecode = cbAutoHtmlDecode.Checked;
+            if (dataGridView1.CurrentCell != null)
+                HandleGridSelectionChanged(this, EventArgs.Empty);
+        }
+
+        private void HandleAutoUrlDecodeChanged(object sender, EventArgs e)
+        {
+            Configuration.Instance.UseAutoUrlDecode = cbAutoUrlDecode.Checked;
+            if (dataGridView1.CurrentCell != null)
+                HandleGridSelectionChanged(this, EventArgs.Empty);
         }
 
         void HandleSyntaxColoringCheckedChanged(object sender, EventArgs e)
@@ -65,10 +85,8 @@ namespace SvclogViewer
         void HandleAutoFormatCheckedChanged(object sender, EventArgs e)
         {
             Configuration.Instance.AutoXmlFormatEnabled = checkAutoFormat.Checked;
-            if (checkAutoFormat.Checked)
-            {
-                FormatXML(textBox1.Text);
-            }
+            if (dataGridView1.CurrentCell != null)
+                HandleGridSelectionChanged(this, EventArgs.Empty);
         }
 
         void HandleMainFormClosing(object sender, FormClosingEventArgs e)
@@ -210,6 +228,12 @@ namespace SvclogViewer
             else
                 textBox1.Text = str;
 
+            if (Configuration.Instance.UseAutoUrlDecode)
+                UrlDecodeXML();
+
+            if (Configuration.Instance.UseAutoHtmlDecode)
+                HtmlDecodeXML();
+
             bool containsBinary = GetBinary(str) != null;
             btnDecodeBinary.Visible = containsBinary;
             btnDecodeBinary.Enabled = containsBinary;
@@ -220,6 +244,16 @@ namespace SvclogViewer
             if (string.IsNullOrWhiteSpace(txtToFormat))
                 return;
             textBox1.Text = XDocument.Parse(txtToFormat).ToString();
+        }
+
+        private void UrlDecodeXML()
+        {
+            textBox1.Text = HttpUtility.UrlDecode(textBox1.Text);
+        }
+
+        private void HtmlDecodeXML()
+        {
+            textBox1.Text = HttpUtility.HtmlDecode(textBox1.Text);
         }
 
         private void HandleFormatXML(object sender, EventArgs e)
@@ -251,7 +285,7 @@ namespace SvclogViewer
             }
             catch (Exception)
             {
-                MessageBox.Show("Error trying to extract the soap envelope or copying it to the clipboard.");
+                MessageBox.Show("Error trying to extract the soap envelope or copying it to the clipboard.\r\n\r\nNote that UrlDecode and HtmlDecode will make the XML invalid and cause this feature to fail.");
             }
         }
 
@@ -531,12 +565,27 @@ namespace SvclogViewer
             else
                 textBox1.Text = decodedString;
 
+            if (Configuration.Instance.UseAutoUrlDecode)
+                UrlDecodeXML();
+
+            if (Configuration.Instance.UseAutoHtmlDecode)
+                HtmlDecodeXML();
+
             btnDecodeBinary.Enabled = false;
         }
 
         private void HandleStartAnalyzerClicked(object sender, EventArgs e)
         {
             new SvcAnalyzerDropper().ShowDialog(this);
+        }
+
+        private void HandleSplitResize(object sender, SplitterEventArgs e)
+        {
+            // When the left/right is resized, adjust column size for the gridview on the left side
+            var newWidth = splitLeftRight.Panel1.Width - 90;
+            if (newWidth < 50)
+                newWidth = 50;
+            dataGridView1.Columns.GetFirstColumn(DataGridViewElementStates.Visible).Width = newWidth;
         }
     }
 }

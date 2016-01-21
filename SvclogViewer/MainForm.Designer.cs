@@ -45,6 +45,7 @@ namespace SvclogViewer
             this.reloadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAppAsDefaultForsvclogFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startsvclogAnalyzerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,13 +61,14 @@ namespace SvclogViewer
             this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitMessageButtons = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbAutoHtmlDecode = new System.Windows.Forms.CheckBox();
+            this.cbAutoUrlDecode = new System.Windows.Forms.CheckBox();
             this.btnDecodeBinary = new System.Windows.Forms.Button();
             this.checkSyntaxColoring = new System.Windows.Forms.CheckBox();
             this.checkAutoFormat = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new SvclogViewer.SwitchableTextBox();
-            this.startsvclogAnalyzerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitLeftRight)).BeginInit();
@@ -92,10 +94,10 @@ namespace SvclogViewer
             this.lblStatus,
             this.progressBar,
             this.lblFilename});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 560);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 644);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1170, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1362, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -133,7 +135,7 @@ namespace SvclogViewer
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1170, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1362, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -197,6 +199,13 @@ namespace SvclogViewer
             this.setAppAsDefaultForsvclogFilesToolStripMenuItem.Text = "Set app as default for .svclog files...";
             this.setAppAsDefaultForsvclogFilesToolStripMenuItem.Click += new System.EventHandler(this.HandleSetAsDefaultClick);
             // 
+            // startsvclogAnalyzerToolStripMenuItem
+            // 
+            this.startsvclogAnalyzerToolStripMenuItem.Name = "startsvclogAnalyzerToolStripMenuItem";
+            this.startsvclogAnalyzerToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.startsvclogAnalyzerToolStripMenuItem.Text = "Start .svclog analyzer...";
+            this.startsvclogAnalyzerToolStripMenuItem.Click += new System.EventHandler(this.HandleStartAnalyzerClicked);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -224,7 +233,6 @@ namespace SvclogViewer
             // 
             this.splitLeftRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitLeftRight.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitLeftRight.IsSplitterFixed = true;
             this.splitLeftRight.Location = new System.Drawing.Point(0, 24);
             this.splitLeftRight.Margin = new System.Windows.Forms.Padding(2);
             this.splitLeftRight.Name = "splitLeftRight";
@@ -236,10 +244,11 @@ namespace SvclogViewer
             // splitLeftRight.Panel2
             // 
             this.splitLeftRight.Panel2.Controls.Add(this.splitMessageButtons);
-            this.splitLeftRight.Size = new System.Drawing.Size(1170, 536);
+            this.splitLeftRight.Size = new System.Drawing.Size(1362, 620);
             this.splitLeftRight.SplitterDistance = 310;
             this.splitLeftRight.SplitterWidth = 3;
             this.splitLeftRight.TabIndex = 2;
+            this.splitLeftRight.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.HandleSplitResize);
             // 
             // splitFilterResult
             // 
@@ -262,7 +271,7 @@ namespace SvclogViewer
             // splitFilterResult.Panel2
             // 
             this.splitFilterResult.Panel2.Controls.Add(this.dataGridView1);
-            this.splitFilterResult.Size = new System.Drawing.Size(310, 536);
+            this.splitFilterResult.Size = new System.Drawing.Size(310, 620);
             this.splitFilterResult.SplitterDistance = 70;
             this.splitFilterResult.SplitterWidth = 3;
             this.splitFilterResult.TabIndex = 1;
@@ -340,7 +349,7 @@ namespace SvclogViewer
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(310, 463);
+            this.dataGridView1.Size = new System.Drawing.Size(310, 547);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.VirtualMode = true;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.HandleCellFormatting);
@@ -353,7 +362,7 @@ namespace SvclogViewer
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.Datetime.DefaultCellStyle = dataGridViewCellStyle1;
             this.Datetime.HeaderText = "Datetime";
-            this.Datetime.MinimumWidth = 215;
+            this.Datetime.MinimumWidth = 50;
             this.Datetime.Name = "Datetime";
             this.Datetime.ReadOnly = true;
             this.Datetime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -386,13 +395,15 @@ namespace SvclogViewer
             // splitMessageButtons.Panel2
             // 
             this.splitMessageButtons.Panel2.Controls.Add(this.textBox1);
-            this.splitMessageButtons.Size = new System.Drawing.Size(857, 536);
+            this.splitMessageButtons.Size = new System.Drawing.Size(1049, 620);
             this.splitMessageButtons.SplitterDistance = 35;
             this.splitMessageButtons.SplitterWidth = 3;
             this.splitMessageButtons.TabIndex = 2;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cbAutoHtmlDecode);
+            this.panel1.Controls.Add(this.cbAutoUrlDecode);
             this.panel1.Controls.Add(this.btnDecodeBinary);
             this.panel1.Controls.Add(this.checkSyntaxColoring);
             this.panel1.Controls.Add(this.checkAutoFormat);
@@ -402,13 +413,33 @@ namespace SvclogViewer
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(857, 35);
+            this.panel1.Size = new System.Drawing.Size(1049, 35);
             this.panel1.TabIndex = 1;
+            // 
+            // cbAutoHtmlDecode
+            // 
+            this.cbAutoHtmlDecode.AutoSize = true;
+            this.cbAutoHtmlDecode.Location = new System.Drawing.Point(719, 6);
+            this.cbAutoHtmlDecode.Name = "cbAutoHtmlDecode";
+            this.cbAutoHtmlDecode.Size = new System.Drawing.Size(110, 17);
+            this.cbAutoHtmlDecode.TabIndex = 7;
+            this.cbAutoHtmlDecode.Text = "Auto HtmlDecode";
+            this.cbAutoHtmlDecode.UseVisualStyleBackColor = true;
+            // 
+            // cbAutoUrlDecode
+            // 
+            this.cbAutoUrlDecode.AutoSize = true;
+            this.cbAutoUrlDecode.Location = new System.Drawing.Point(611, 6);
+            this.cbAutoUrlDecode.Name = "cbAutoUrlDecode";
+            this.cbAutoUrlDecode.Size = new System.Drawing.Size(102, 17);
+            this.cbAutoUrlDecode.TabIndex = 6;
+            this.cbAutoUrlDecode.Text = "Auto UrlDecode";
+            this.cbAutoUrlDecode.UseVisualStyleBackColor = true;
             // 
             // btnDecodeBinary
             // 
             this.btnDecodeBinary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDecodeBinary.Location = new System.Drawing.Point(610, 3);
+            this.btnDecodeBinary.Location = new System.Drawing.Point(834, 2);
             this.btnDecodeBinary.Margin = new System.Windows.Forms.Padding(2);
             this.btnDecodeBinary.Name = "btnDecodeBinary";
             this.btnDecodeBinary.Size = new System.Drawing.Size(125, 24);
@@ -466,22 +497,15 @@ namespace SvclogViewer
             this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(857, 498);
+            this.textBox1.Size = new System.Drawing.Size(1049, 582);
             this.textBox1.TabIndex = 0;
-            // 
-            // startsvclogAnalyzerToolStripMenuItem
-            // 
-            this.startsvclogAnalyzerToolStripMenuItem.Name = "startsvclogAnalyzerToolStripMenuItem";
-            this.startsvclogAnalyzerToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
-            this.startsvclogAnalyzerToolStripMenuItem.Text = "Start .svclog analyzer...";
-            this.startsvclogAnalyzerToolStripMenuItem.Click += new System.EventHandler(this.HandleStartAnalyzerClicked);
             // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 582);
+            this.ClientSize = new System.Drawing.Size(1362, 666);
             this.Controls.Add(this.splitLeftRight);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -555,6 +579,8 @@ namespace SvclogViewer
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Button btnDecodeBinary;
         private System.Windows.Forms.ToolStripMenuItem startsvclogAnalyzerToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cbAutoHtmlDecode;
+        private System.Windows.Forms.CheckBox cbAutoUrlDecode;
     }
 }
 

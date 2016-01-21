@@ -1,3 +1,8 @@
+2016-01-20:
+- NEW: Resize the left/right panel
+- NEW: Auto UrlDecode (with last selection saved in config)
+- NEW: Auto HtmlDecode (with last selection saved in config)
+
 2015-10-08:
 - CHG: Moved clickonce-specific code to a reusable library.
 - NEW: Svclog Analyzer via Extra menu. Parses .svclog and creates a .csv with a list of calls and how long they took.
