@@ -2,7 +2,7 @@
 
 An high-performance alternative for viewing WCF messages with SvcTraceViewer.exe.
 
-Cannot be used for other types of messages besides WCF messages.
+Cannot be used for other types of messages besides WCF messages. Note that this only reads the "MessageLogTraceRecord" elements from the logfile. An example configuration can be found below.
 
 ## Installation
 
@@ -21,6 +21,38 @@ http://martijn.tikkie.net/apps/SvclogViewer/SvclogViewer.application
 * Auto-indent the XML content (has a minor performance impact)
 * Use syntax coloring (has a bigger performance impact)
 * Save request as...
+
+## Example web.config configuration
+
+```
+<configuration>
+  <system.diagnostics>
+    <sources>
+      <source name="System.ServiceModel" switchValue="Error, ActivityTracing">
+        <listeners>
+          <add name="messagelog" />
+        </listeners>
+      </source>
+      <source name="System.ServiceModel.MessageLogging">
+        <listeners>
+          <add name="messagelog" />
+        </listeners>
+      </source>
+    </sources>
+    <sharedListeners>
+      <add name="messagelog" type="System.Diagnostics.XmlWriterTraceListener" initializeData="C:\MyLogDir\MyMessageLog.svclog" traceOutputOptions="DateTime" />
+    </sharedListeners>
+    <trace autoflush="true" />
+  </system.diagnostics>
+  <system.serviceModel>
+    <diagnostics>
+      <messageLogging logEntireMessage="true" logMalformedMessages="true" logMessagesAtServiceLevel="true" logMessagesAtTransportLevel="true" maxSizeOfMessageToLog="40000000" maxMessagesToLog="-1"/>
+    </diagnostics>
+  </system.serviceModel>
+</configuration>
+```
+
+Merge and adjust your configuration appropriately.
 
 ## Author
 
