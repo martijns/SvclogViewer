@@ -41,6 +41,7 @@ namespace SvclogViewer
                 applicationName: "SvclogViewer",
                 authorName: "Martijn Stolk",
                 reportBugEndpoint: "http://martijn.tikkie.net/reportbug.php",
+                feedbackEndpoint: "http://martijn.tikkie.net/feedback.php",
                 args: arguments,
                 mainMethod: method);
         }

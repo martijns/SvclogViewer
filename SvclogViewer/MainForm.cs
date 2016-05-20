@@ -587,5 +587,10 @@ namespace SvclogViewer
                 newWidth = 50;
             dataGridView1.Columns.GetFirstColumn(DataGridViewElementStates.Visible).Width = newWidth;
         }
+
+        private void HandleSubmitFeedbackClicked(object sender, EventArgs e)
+        {
+            new FeedbackForm().ShowDialog(this);
+        }
     }
 }

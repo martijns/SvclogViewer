@@ -1,3 +1,7 @@
+2016-05-20:
+- NEW: Added ability to submit feedback (see menu)
+- CHG: Updated common library
+
 2016-01-20:
 - NEW: Resize the left/right panel
 - NEW: Auto UrlDecode (with last selection saved in config)

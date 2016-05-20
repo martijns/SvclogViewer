@@ -69,6 +69,7 @@ namespace SvclogViewer
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new SvclogViewer.SwitchableTextBox();
+            this.submitFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitLeftRight)).BeginInit();
@@ -210,6 +211,7 @@ namespace SvclogViewer
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changelogToolStripMenuItem,
+            this.submitFeedbackToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -218,15 +220,15 @@ namespace SvclogViewer
             // changelogToolStripMenuItem
             // 
             this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
-            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.changelogToolStripMenuItem.Text = "Changelog";
+            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.changelogToolStripMenuItem.Text = "Changelog...";
             this.changelogToolStripMenuItem.Click += new System.EventHandler(this.HandleChangelogClicked);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HandleAbout);
             // 
             // splitLeftRight
@@ -500,6 +502,13 @@ namespace SvclogViewer
             this.textBox1.Size = new System.Drawing.Size(1049, 582);
             this.textBox1.TabIndex = 0;
             // 
+            // submitFeedbackToolStripMenuItem
+            // 
+            this.submitFeedbackToolStripMenuItem.Name = "submitFeedbackToolStripMenuItem";
+            this.submitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.submitFeedbackToolStripMenuItem.Text = "Submit feedback...";
+            this.submitFeedbackToolStripMenuItem.Click += new System.EventHandler(this.HandleSubmitFeedbackClicked);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -581,6 +590,7 @@ namespace SvclogViewer
         private System.Windows.Forms.ToolStripMenuItem startsvclogAnalyzerToolStripMenuItem;
         private System.Windows.Forms.CheckBox cbAutoHtmlDecode;
         private System.Windows.Forms.CheckBox cbAutoUrlDecode;
+        private System.Windows.Forms.ToolStripMenuItem submitFeedbackToolStripMenuItem;
     }
 }
 
