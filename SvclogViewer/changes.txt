@@ -1,3 +1,9 @@
+2016-09-29:
+- CHG: Updated app with new code signing cert
+
+2016-08-24:
+- CHG: Target changed to AnyCPU and not preferring 32-bit. Should fix out of memory issues.
+
 2016-05-20:
 - NEW: Added ability to submit feedback (see menu)
 - CHG: Updated common library
